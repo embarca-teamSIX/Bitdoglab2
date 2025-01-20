@@ -41,6 +41,53 @@ void control_leds(int red, int green, int blue) {
     gpio_put(LED_G_PIN, green);
     gpio_put(LED_B_PIN, blue);
 }
+void pisca_leds_sirene() {
+    int controle = 0;  
+    int intensidade = 50; 
+    
+    while (controle < 20) {  
+        gpio_put(13, 1);  // Acende LED 13
+        gpio_put(11, 1);  // Acende LED 11
+        gpio_put(12, 1);  // Acende LED 12
+        sleep_ms(intensidade);  
+
+        gpio_put(13, 0);  // Apaga LED 13
+        gpio_put(11, 0);  // Apaga LED 11
+        gpio_put(12, 0);  // Apaga LED 12
+        sleep_ms(intensidade);  
+        intensidade = (intensidade == 50) ? 100 : 50;
+        controle++;  
+    }
+}
+
+void clamp_MM(int duracao)
+{
+    pisca_leds_sirene();
+    int tempo_s = duracao/ 2;  
+
+
+    int tom_baixo = 600;  // Frequência baixa
+    int tom_alto = 1200;  // Frequência alta
+
+    // Intervalo de tempo entre os tons
+    int intervalo = 300;  // Intervalo de 300ms entre as trocas de tom
+
+    
+    for (int i = 0; i < tempo_s / intervalo; i++) {
+        // Emite o tom baixo
+        gpio_put(BUZZER_PIN, 1);
+        sleep_ms(1000 / tom_baixo);  
+        gpio_put(BUZZER_PIN, 0);
+        sleep_ms(1000 / tom_baixo);  
+
+        // Emite o tom alto
+        gpio_put(BUZZER_PIN, 1);
+        sleep_ms(1000 / tom_alto);   // Duracao do tom alto
+        gpio_put(BUZZER_PIN, 0);
+        sleep_ms(1000 / tom_alto);   // Pausa
+    }
+}
+
 
 // Pisca LED
 void pisca_led()
@@ -62,31 +109,23 @@ void pisca_led()
     control_leds(0,0,0);
 }
 
-void sos_led()
+void pisca_led_com_buzzer()
 {
-    for (int i = 0; i < 3; i++) {
-        control_leds(1,1,1);
-        sleep_ms(200);
-        control_leds(0,0,0);
-        sleep_ms(200);
-        sleep_ms(125);
-    }
-    sleep_ms(250);
-    for (int i = 0; i < 3; i++) {
-        control_leds(1,1,1);
-        sleep_ms(800);
-        control_leds(0,0,0);
-        sleep_ms(800);
-        sleep_ms(125);
-    }
-    sleep_ms(250);
-    for (int i = 0; i < 3; i++) {  
-        control_leds(1,1,1);
-        sleep_ms(200);
-        control_leds(0,0,0);
-        sleep_ms(200);
-        sleep_ms(125);
-    }
+    control_leds(1,0,0);
+    sleep_ms(400);
+    control_leds(0,1,0);
+    sleep_ms(400);
+    control_leds(0,0,1);
+    sleep_ms(400);
+    control_leds(1,1,0);
+    sleep_ms(400);
+    control_leds(1,0,1);
+    sleep_ms(400);
+    control_leds(0,1,1);
+    sleep_ms(400);
+    control_leds(1,1,1);
+    sleep_ms(400);
+    control_leds(0,0,0);
 }
 
 // Interpretação dos comandos UART
@@ -103,6 +142,10 @@ void process_command(const char *command) {
         control_leds(0, 0, 0);
     } else if (strcmp(command, "BUZZER_ON") == 0) {
         activate_buzzer(2000);
+    } else if (strcmp(command, "SIRENE_ON") == 0) {//mine
+        clamp_MM(2000);
+    } else if (strcmp(command, "PISCA") == 0) {
+        pisca_led();
     } else if (strcmp(command, "PISCA") == 0) {
         pisca_led();
     } else if (strcmp(command, "SOS") == 0) {
