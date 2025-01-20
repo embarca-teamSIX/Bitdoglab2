@@ -56,6 +56,9 @@ Sistema inicializado. Aguarde comandos UART...
 - **`LED_RED_ON`**  
   Liga o LED vermelho.
 
+- **`SIRENE_ON`**  
+  Ativa O buzzer em uma sequencia que emula sirene e com LEDs piscando emulando estrobo.
+
 - **`LED_WHITE_ON`**  
   Liga todos os LEDs (misturando RGB para gerar branco).
 
