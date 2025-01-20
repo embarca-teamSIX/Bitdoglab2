@@ -116,7 +116,9 @@ O sistema foi otimizado para evitar erros de buffer, garantindo que apenas coman
 - Se a Raspberry Pi Pico não responder, tente desconectá-la e reconectá-la manualmente.
 
 ---
-
+### Link do vídeo - Apresentação da tarefa
+- [https://youtu.be/EGRNe30qIlA](https://www.youtube.com/shorts/CVkXPXOvSU4)
+  
 ## Autores
 
 - Deividson Ribeiro
