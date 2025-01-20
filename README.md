@@ -65,6 +65,12 @@ Sistema inicializado. Aguarde comandos UART...
 - **`BUZZER_ON`**  
   Ativa o buzzer por 2 segundos.
 
+- **`PISCA`**  
+  Faz o led piscar em diversas combinações de cores diferentes, combinando o RGB
+
+- **`SOS`**  
+  Ativa o sinal de SOS em código morse com o led rgb da placa
+
 - **`REBOOT`**  
   Reinicia a Raspberry Pi Pico no modo USB Bootloader.
 
