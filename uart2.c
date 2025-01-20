@@ -42,6 +42,53 @@ void control_leds(int red, int green, int blue) {
     gpio_put(LED_B_PIN, blue);
 }
 
+// Pisca LED
+void pisca_led()
+{
+    control_leds(1,0,0);
+    sleep_ms(400);
+    control_leds(0,1,0);
+    sleep_ms(400);
+    control_leds(0,0,1);
+    sleep_ms(400);
+    control_leds(1,1,0);
+    sleep_ms(400);
+    control_leds(1,0,1);
+    sleep_ms(400);
+    control_leds(0,1,1);
+    sleep_ms(400);
+    control_leds(1,1,1);
+    sleep_ms(400);
+    control_leds(0,0,0);
+}
+
+void sos_led()
+{
+    for (int i = 0; i < 3; i++) {
+        control_leds(1,1,1);
+        sleep_ms(200);
+        control_leds(0,0,0);
+        sleep_ms(200);
+        sleep_ms(125);
+    }
+    sleep_ms(250);
+    for (int i = 0; i < 3; i++) {
+        control_leds(1,1,1);
+        sleep_ms(800);
+        control_leds(0,0,0);
+        sleep_ms(800);
+        sleep_ms(125);
+    }
+    sleep_ms(250);
+    for (int i = 0; i < 3; i++) {  
+        control_leds(1,1,1);
+        sleep_ms(200);
+        control_leds(0,0,0);
+        sleep_ms(200);
+        sleep_ms(125);
+    }
+}
+
 // Interpretação dos comandos UART
 void process_command(const char *command) {
     if (strcmp(command, "LED_GREEN_ON") == 0) {
@@ -56,6 +103,10 @@ void process_command(const char *command) {
         control_leds(0, 0, 0);
     } else if (strcmp(command, "BUZZER_ON") == 0) {
         activate_buzzer(2000);
+    } else if (strcmp(command, "PISCA") == 0) {
+        pisca_led();
+    } else if (strcmp(command, "SOS") == 0) {
+        sos_led();
     } else if (strcmp(command, "REBOOT") == 0) {
         printf("Reiniciando para o modo USB Bootloader...\n");
         sleep_ms(1000);
