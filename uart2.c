@@ -59,6 +59,7 @@ void pisca_led()
     sleep_ms(400);
     control_leds(1,1,1);
     sleep_ms(400);
+    control_leds(0,0,0);
 }
 
 // Interpretação dos comandos UART
@@ -76,7 +77,7 @@ void process_command(const char *command) {
     } else if (strcmp(command, "BUZZER_ON") == 0) {
         activate_buzzer(2000);
     } else if (strcmp(command, "PISCA") == 0) {
-
+        pisca_led();
     } else if (strcmp(command, "PISCA_BUZ") == 0) {
 
     } else if (strcmp(command, "REBOOT") == 0) {
