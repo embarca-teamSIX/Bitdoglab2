@@ -62,6 +62,25 @@ void pisca_led()
     control_leds(0,0,0);
 }
 
+void pisca_led_com_buzzer()
+{
+    control_leds(1,0,0);
+    sleep_ms(400);
+    control_leds(0,1,0);
+    sleep_ms(400);
+    control_leds(0,0,1);
+    sleep_ms(400);
+    control_leds(1,1,0);
+    sleep_ms(400);
+    control_leds(1,0,1);
+    sleep_ms(400);
+    control_leds(0,1,1);
+    sleep_ms(400);
+    control_leds(1,1,1);
+    sleep_ms(400);
+    control_leds(0,0,0);
+}
+
 // Interpretação dos comandos UART
 void process_command(const char *command) {
     if (strcmp(command, "LED_GREEN_ON") == 0) {
@@ -78,8 +97,6 @@ void process_command(const char *command) {
         activate_buzzer(2000);
     } else if (strcmp(command, "PISCA") == 0) {
         pisca_led();
-    } else if (strcmp(command, "PISCA_BUZ") == 0) {
-
     } else if (strcmp(command, "REBOOT") == 0) {
         printf("Reiniciando para o modo USB Bootloader...\n");
         sleep_ms(1000);
