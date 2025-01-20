@@ -109,23 +109,31 @@ void pisca_led()
     control_leds(0,0,0);
 }
 
-void pisca_led_com_buzzer()
+void sos_led()
 {
-    control_leds(1,0,0);
-    sleep_ms(400);
-    control_leds(0,1,0);
-    sleep_ms(400);
-    control_leds(0,0,1);
-    sleep_ms(400);
-    control_leds(1,1,0);
-    sleep_ms(400);
-    control_leds(1,0,1);
-    sleep_ms(400);
-    control_leds(0,1,1);
-    sleep_ms(400);
-    control_leds(1,1,1);
-    sleep_ms(400);
-    control_leds(0,0,0);
+    for (int i = 0; i < 3; i++) {
+        control_leds(1,1,1);
+        sleep_ms(200);
+        control_leds(0,0,0);
+        sleep_ms(200);
+        sleep_ms(125);
+    }
+    sleep_ms(250);
+    for (int i = 0; i < 3; i++) {
+        control_leds(1,1,1);
+        sleep_ms(800);
+        control_leds(0,0,0);
+        sleep_ms(800);
+        sleep_ms(125);
+    }
+    sleep_ms(250);
+    for (int i = 0; i < 3; i++) {  
+        control_leds(1,1,1);
+        sleep_ms(200);
+        control_leds(0,0,0);
+        sleep_ms(200);
+        sleep_ms(125);
+    }
 }
 
 // Interpretação dos comandos UART
